@@ -1,6 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 import pandas as pd
+from matplotlib.ticker import FixedLocator
 # Here, we interested in simulating the continuous HMC with infinitsimal generator: \begin{pmatrix} -1 & 1 & 0 // 1 & -2 & 1 // 0 & 3 & -3 \end{pmatrix}[&BE4JAAA=].
 # What we need to do is the following. First, we calculate for each stage the next stage (int) and the time we stay at the current stage. After we sample these numbers, we know the exact simulation for the next few seconds.
 # This allows us to generate a sequence of stages and a sequence of stages and times. Then we extract the actual place at time t by getting the first n such that t_1 + ... + t_n > T and deduicng the step is X_n.
@@ -58,6 +59,16 @@ class Simulation:
             sum = sum + self.T[id + 1]
             id = id + 1
         return self.X[id]
+
+
+    def plot_trace(self, ax=None):
+        if ax is None:
+            fig, ax = plt.subplots()
+        ax.step(self.T.cumsum(), self.X[:-1], where='pre')  # The chain stayed zero time at the last state
+        ax.yaxis.set_major_locator(FixedLocator([1, 2, 3]))
+        ax.set_ylabel("State")
+        ax.set_xlabel("Time")
+        return ax
 
 
 def calc_sim_state(grown_simulation, t_axis, name=None):
