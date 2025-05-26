@@ -6,7 +6,7 @@ import pandas as pd
 # This allows us to generate a sequence of stages and a sequence of stages and times. Then we extract the actual place at time t by getting the first n such that t_1 + ... + t_n > T and deduicng the step is X_n.
 
 
-LENGTH_OF_SIMULATION = 10
+LENGTH_OF_SIMULATION = 5
 NUMBER_OF_SIMULATIONS = 500
 def get_T_and_X_from_1():
     X = 2
