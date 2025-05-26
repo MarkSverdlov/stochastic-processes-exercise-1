@@ -69,3 +69,23 @@ X = np.linspace(0, LENGTH_OF_SIMULATION, 200)
 samples = pd.concat([calc_sim_state(sim, X, name=f'simulation {i}') for i, sim in enumerate(sims)], axis=1)
 samples.to_csv('samples.csv')
 
+
+# We calculate estimate to the marginal distribuition in every step:
+dist_estimates = pd.get_dummies(samples.stack()).groupby(level=0).mean()
+dist_estimates.to_csv('distribuitions_estimates.csv')
+
+
+# Finally, we calculate the L2 difference between the empirical distrbution at time t to the stationary distrbution.
+
+theoretical = pd.DataFrame(index=X, columns=[1, 2, 3])
+theoretical[1] = 3 / 7
+theoretical[2] = 3 / 7
+theoretical[3] = 1 / 7
+
+diff = np.sqrt(((dist_estimates - theoretical)**2).sum(axis=1))
+diff.to_csv('convergence.csv')
+plt.plot(diff)
+theoretical_diff = pd.Series(np.exp((-3+np.sqrt(2))*X), index=X)
+plt.plot(theoretical_diff, ls='--')
+plt.show()
+
