@@ -50,12 +50,17 @@ class Simulation:
     def grow_to(self, T):
         while self.time < T:
             self.simulate_next()
+        self.T[-1] = T - self.T[:-1].sum()
+        self.time = T
+        self.X = self.X[:-1]  # remove last state that wasn't reached in time
         return self
 
     def get_state(self, t):
+        if t >= self.time:
+            return self.X[-1]
         id = 0
         sum = self.T[0]
-        while sum <= t:
+        while sum < t:
             sum = sum + self.T[id + 1]
             id = id + 1
         return self.X[id]
@@ -64,7 +69,10 @@ class Simulation:
     def plot_trace(self, ax=None):
         if ax is None:
             fig, ax = plt.subplots()
-        ax.step(self.T.cumsum(), self.X[:-1], where='pre')  # The chain stayed zero time at the last state
+        T = self.T.cumsum()
+        T = np.concatenate([np.zeros(1), T])
+        ax.step(T[:-1], self.X, where='post')  # The ending time does not show in the graph
+        ax.hlines(self.X[-1], T[-2], T[-1])
         ax.yaxis.set_major_locator(FixedLocator([1, 2, 3]))
         ax.set_ylabel("State")
         ax.set_xlabel("Time")
