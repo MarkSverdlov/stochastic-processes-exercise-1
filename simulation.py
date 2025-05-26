@@ -84,8 +84,12 @@ theoretical[3] = 1 / 7
 
 diff = np.sqrt(((dist_estimates - theoretical)**2).sum(axis=1))
 diff.to_csv('convergence.csv')
-plt.plot(diff)
+plt.style.use('ggplot')
+fig, ax = plt.subplots(figsize=(20, 6))
+ax.plot(diff, label='Estimated Difference')
 theoretical_diff = pd.Series(np.exp((-3+np.sqrt(2))*X), index=X)
-plt.plot(theoretical_diff, ls='--')
-plt.show()
+ax.plot(theoretical_diff, ls='--', label='Theoretical Difference')
+ax.set_title("L2 Difference Between the Estimated Marginal Distribution and the Stationary Distribution of the Markov Chain")
+ax.legend()
+fig.savefig('Convergence of the Estimated Marginal Distribution.png')
 
