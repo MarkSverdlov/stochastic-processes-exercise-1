@@ -9,19 +9,24 @@ from matplotlib.ticker import FixedLocator
 
 LENGTH_OF_SIMULATION = 5
 NUMBER_OF_SIMULATIONS = 500
+
+
+rng = np.random.default_rng(18**2)
+
+
 def get_T_and_X_from_1():
     X = 2
-    T = np.random.exponential(1)
+    T = rng.exponential(1)
     return T, X
 
 def get_T_and_X_from_2():
-    X = np.random.choice([1, 3])
-    T = np.random.exponential(1 / 2)
+    X = rng.choice([1, 3])
+    T = rng.exponential(1 / 2)
     return T, X
 
 def get_T_and_X_from_3():
     X = 2
-    T = np.random.exponential(1 / 3)
+    T = rng.exponential(1 / 3)
     return T, X
 
 def get_T_and_X(current):
