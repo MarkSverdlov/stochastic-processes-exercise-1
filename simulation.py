@@ -46,6 +46,7 @@ class Simulation:
     def grow_to(self, T):
         while self.time < T:
             self.simulate_next()
+        return self
 
     def get_state(self, t):
         id = 0
