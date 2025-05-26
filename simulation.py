@@ -5,6 +5,9 @@ import pandas as pd
 # What we need to do is the following. First, we calculate for each stage the next stage (int) and the time we stay at the current stage. After we sample these numbers, we know the exact simulation for the next few seconds.
 # This allows us to generate a sequence of stages and a sequence of stages and times. Then we extract the actual place at time t by getting the first n such that t_1 + ... + t_n > T and deduicng the step is X_n.
 
+
+LENGTH_OF_SIMULATION = 10
+NUMBER_OF_SIMULATIONS = 500
 def get_T_and_X_from_1():
     X = 2
     T = np.random.exponential(1)
@@ -61,8 +64,8 @@ def calc_sim_state(grown_simulation, t_axis, name=None):
     return pd.Series(np.array([grown_simulation.get_state(t) for t in t_axis]), index=t_axis, name=name)
 
 
-sims = [Simulation().grow_to(6000) for _ in range(20)]
-X = np.linspace(0, 6000, 200)
+sims = [Simulation().grow_to(LENGTH_OF_SIMULATION) for _ in range(NUMBER_OF_SIMULATIONS)]
+X = np.linspace(0, LENGTH_OF_SIMULATION, 200)
 samples = pd.concat([calc_sim_state(sim, X, name=f'simulation {i}') for i, sim in enumerate(sims)], axis=1)
 samples.to_csv('sample.csv')
 
