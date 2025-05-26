@@ -55,11 +55,15 @@ class Simulation:
             id = id + 1
         return self.X[id]
 
+
+def calc_sim_state(grown_simulation, t_axis):
+    return pd.Series(np.array([grown_simulation.get_state(t) for t in t_axis]), index=t_axis)
+
+
 sim = Simulation()
 sim.grow_to(6000)
 X = np.linspace(0, 6000, 200)
-y = np.array([sim.get_state(x) for x in X])
-plt.plot(X, y)
+plt.plot(calc_sim_state(sim, X))
 plt.show()
 df = pd.DataFrame(columns=['state', 'time'])
 df['state'] = sim.X[:-1]  # The last state doesn't have corresponding time yet
