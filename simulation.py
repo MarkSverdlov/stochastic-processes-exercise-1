@@ -57,8 +57,8 @@ class Simulation:
         return self.X[id]
 
 
-def calc_sim_state(grown_simulation, t_axis):
-    return pd.Series(np.array([grown_simulation.get_state(t) for t in t_axis]), index=t_axis)
+def calc_sim_state(grown_simulation, t_axis, name=None):
+    return pd.Series(np.array([grown_simulation.get_state(t) for t in t_axis]), index=t_axis, name=name)
 
 
 sim = Simulation()
