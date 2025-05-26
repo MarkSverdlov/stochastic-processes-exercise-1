@@ -80,7 +80,6 @@ class Simulation:
         ax.hlines(self.X[-1], T[-2], T[-1])
         ax.yaxis.set_major_locator(FixedLocator([1, 2, 3]))
         ax.set_ylabel("State")
-        ax.set_xlabel("Time")
         return ax
 
 
