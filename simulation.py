@@ -67,5 +67,5 @@ def calc_sim_state(grown_simulation, t_axis, name=None):
 sims = [Simulation().grow_to(LENGTH_OF_SIMULATION) for _ in range(NUMBER_OF_SIMULATIONS)]
 X = np.linspace(0, LENGTH_OF_SIMULATION, 200)
 samples = pd.concat([calc_sim_state(sim, X, name=f'simulation {i}') for i, sim in enumerate(sims)], axis=1)
-samples.to_csv('sample.csv')
+samples.to_csv('samples.csv')
 
