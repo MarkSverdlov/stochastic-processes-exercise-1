@@ -119,5 +119,5 @@ axes[1].set_ylabel('L2 Difference')
 axes[1].set_xlabel('Time')
 axes[1].legend()
 fig.tight_layout()
-fig.savefig('Convergence of the Estimated Marginal Distribution.png')
+fig.savefig('Convergence of the Estimated Marginal Distribution.svg')
 
